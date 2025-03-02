@@ -17,7 +17,7 @@ class Film {
         System.out.println("Judul film: " + judulFilm);
         System.out.println("Genre film: " + genreFilm);
         System.out.println("Jam tayang film: " + jTayangFilm + " WIB");
-        System.out.println("Harga tiket film: " + hTiketFilm);
+        System.out.println("Harga tiket film: Rp" + hTiketFilm);
     }
 }
 
@@ -42,7 +42,7 @@ class Studio {
 
     void studioInfo() {
         System.out.println("Nomor studio: " + noStudio);
-        System.out.println("Kapasitas studio: " + kursiStudio);
+        System.out.println("Kapasitas studio: " + kursiStudio + " orang");
         film.filmInfo();
     }
 }
@@ -70,57 +70,48 @@ class Tiket {
         this.noTiket = noTiket;
         this.film = film;
         this.studio = studio;
-        if (tempatDuduk > studio.getKursi()) {
-            System.out.println("Kursi melebihi kapasitas.");
-            this.tempatDuduk = studio.getKursi();
-        } else if (tempatDuduk < 1) {
-            System.out.println("Kursi tidak boleh kurang dari 1.");
-            this.tempatDuduk = 1;
-        } else {
-            this.tempatDuduk = tempatDuduk;
-        }
         this.tempatDuduk = tempatDuduk;
         this.audiens = audiens;
     }
 
     void tiketInfo() {
-        System.out.println("### No. Tiket: " + noTiket + " ###");
-        studio.studioInfo();
-        System.out.println("Kursi: " + tempatDuduk);
         audiens.audiensInfo();
+        System.out.println("Kursi: " + tempatDuduk);
+        System.out.println("No. Tiket: " + noTiket);
+        studio.studioInfo();
         System.out.println("");
     }
 }
 
-public class bioskop() {
-  public static void main (String[] args) {
-    Film film1 = new Film("T-34", "Action", LocalTime.of(10,0), 50000);
-    Film film2 = new Film("The Maze Runner", "Sci-Fi", LocalTime.of(13,0), 40000);
-    Film film3 = new Film("Finding Nemo", "Animation", LocalTime.of(15,0), 30000);
-    Film film4 = new Film("The Imitation Game", "History", LocalTime.of(12,0), 45000);
+public class bioskop {
+    public static void main (String[] args) {
+        Film film1 = new Film("T-34", "Action", LocalTime.of(14,0), 40000);
+        Film film2 = new Film("The Maze Runner", "Sci-Fi", LocalTime.of(10,0), 45000);
+        Film film3 = new Film("Finding Nemo", "Animation", LocalTime.of(16,0), 30000);
+        Film film4 = new Film("The Imitation Game", "History", LocalTime.of(13,0), 47000);
+    
+        Studio studio1 = new Studio(1, 50, film1);
+        Studio studio2 = new Studio(2, 40, film2);
+        Studio studio3 = new Studio(3, 50, film3);
+    
+        Tiket tiket1 = new Tiket(1, film1, studio1, 1, new Audiens("Reza"));
+        Tiket tiket2 = new Tiket(2, film2, studio2, 2, new Audiens("Sigit"));
+        Tiket tiket3 = new Tiket(3, film3, studio3, 3, new Audiens("Farhan"));
+        Tiket tiket4 = new Tiket(4, film2, studio1, 4, new Audiens("Kevin"));
 
-    Studio studio1 = new Studio(1, 50, film1);
-    Studio studio2 = new Studio(2, 40, film2);
-    Studio studio3 = new Studio(3, 30, film3);
-
-    Tiket tiket1 = new Tiket(1, film1, studio1, 1, new Audiens("Reza"));
-    Tiket tiket2 = new Tiket(2, film2, studio2, 2, new Audiens("Sigit"));
-    Tiket tiket3 = new Tiket(3, film3, studio3, 3, new Audiens("Farhan"));
-    Tiket tiket4 = new Tiket(4, film2, studio1, 4, new Audiens("Kevin"));
-
-    // menampilkan informasi film di hari pertama
-    System.out.println("----- Informasi Hari Pertama -----");
-    tiket1.tiketInfo();
-    tiket2.tiketInfo();
-    tiket3.tiketInfo();
-
-    // merubah film di tiap studio di hari berikutnya
-    studio1.setFilm(film2);
-    studio2.setFilm(film4);
-    studio3.setFilm(film1);
-
-    // menampilkan informasi film di hari kedua
-    System.out.println("----- Informasi Hari Kedua -----");
-    tiket4.tiketInfo();
+        // first day
+        System.out.println("----- Informasi Hari Pertama -----");
+        tiket1.tiketInfo();
+        tiket2.tiketInfo();
+        tiket3.tiketInfo();
+    
+        // movie switch
+        studio1.setFilm(film2);
+        studio2.setFilm(film4);
+        studio3.setFilm(film1);
+    
+        // second day
+        System.out.println("----- Informasi Hari Kedua -----");
+        tiket4.tiketInfo();
     }
 }
